@@ -12,10 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.ivandgetic.stock.AppConfig;
 import org.ivandgetic.stock.R;
-import org.ivandgetic.stock.fragment.AboutFragment;
+import org.ivandgetic.stock.fragment.NewsFragment;
 import org.ivandgetic.stock.fragment.OptionFragment;
-import org.ivandgetic.stock.fragment.OverallFragment;
+import org.ivandgetic.stock.fragment.OverviewFragment;
 import org.ivandgetic.stock.service.MyService;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -64,7 +65,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         switch (item.getItemId()) {
             case R.id.action_settings:
                 break;
+            case R.id.action_about:
+                break;
             case R.id.action_exit:
+                AppConfig.isOpen = false;
                 System.exit(0);
                 break;
         }
@@ -84,6 +88,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppConfig.isOpen = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppConfig.isOpen = false;
+    }
 
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -98,9 +113,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 0:
                     return new OptionFragment();
                 case 1:
-                    return new OverallFragment();
+                    return new OverviewFragment();
                 case 2:
-                    return new AboutFragment();
+                    return new NewsFragment();
             }
             return null;
         }
@@ -118,10 +133,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 1:
                     return "沪深";
                 case 2:
-                    return "关于";
+                    return "财经资讯";
             }
             return null;
         }
     }
-
 }

@@ -8,7 +8,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.ivandgetic.stock.unit.StockUnit;
-import org.ivandgetic.stock.fragment.OverallFragment;
+import org.ivandgetic.stock.fragment.OverviewFragment;
 import org.ivandgetic.stock.service.MyService;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class IndexStockRefreshTask extends AsyncTask<Void, Void, String> {
         String resultString = null;
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet("http://hq.sinajs.cn/list=sh000001,sz399001,sz399006");
+            HttpGet httpGet = new HttpGet("http://hq.sinajs.cn/list=s_sh000001,s_sz399001,s_sz399006");
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             String responseBody = httpClient.execute(httpGet, responseHandler);
             resultString = new String(responseBody.getBytes("GBK"), "GBK");
@@ -37,18 +37,10 @@ public class IndexStockRefreshTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        String SZZS=(s.split(";"))[0];
-        String SZCZ=(s.split(";"))[1];
-        String CYBZ=(s.split(";"))[2];
-        Float SZZSzrPrice = Float.valueOf(SZZS.split(",")[2]);
-        Float SZZSdqPrice = Float.valueOf(SZZS.split(",")[3]);
-        Float SZCZzrPrice = Float.valueOf(SZCZ.split(",")[2]);
-        Float SZCZdqPrice = Float.valueOf(SZCZ.split(",")[3]);
-        Float CYBZzrPrice = Float.valueOf(CYBZ.split(",")[2]);
-        Float CYBZdqPrice = Float.valueOf(CYBZ.split(",")[3]);
-        MyService.stockOverallList.set(0, new StockUnit("上证指数", SZZSdqPrice, SZZSdqPrice - SZZSzrPrice, ((SZZSdqPrice - SZZSzrPrice) / SZZSzrPrice) * 100));
-        MyService.stockOverallList.set(1, new StockUnit("上证指数", SZCZdqPrice, SZCZdqPrice - SZCZzrPrice, ((SZCZdqPrice - SZCZzrPrice) / SZCZzrPrice) * 100));
-        MyService.stockOverallList.set(2, new StockUnit("上证指数", CYBZdqPrice, CYBZdqPrice - CYBZzrPrice, ((CYBZdqPrice - CYBZzrPrice) / CYBZzrPrice) * 100));
-        OverallFragment.update();
+        String[] information = s.split(";");
+        for (int i=0;i<=2;i++){
+            MyService.stockOverviewList.set(i, new StockUnit(((information[i].split(","))[0].split("\""))[1], (information[i].split(","))[1], (information[i].split(","))[2], (information[i].split(","))[3]));
+        }
+        OverviewFragment.update();
     }
 }

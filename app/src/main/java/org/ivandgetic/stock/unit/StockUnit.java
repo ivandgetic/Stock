@@ -10,18 +10,19 @@ public class StockUnit {
     float quoteChange;
     float change;
 
-    public StockUnit(String name, float price, float change, float quoteChange) {
+    public StockUnit(String name, String price, String change, String quoteChange) {
         this.name = name;
-        this.price = price;
-        this.change = change;
-        this.quoteChange = quoteChange;
+        this.price = Float.valueOf(price);
+        this.change = Float.valueOf(change);
+        this.quoteChange = Float.valueOf(quoteChange);
     }
 
-    public StockUnit(String name, String code, float price, float quoteChange) {
+    public StockUnit(String name, String code, float price, float quoteChange, float change) {
         this.name = name;
         this.code = code;
         this.price = price;
         this.quoteChange = quoteChange;
+        this.change = change;
     }
 
     public float getChange() {

@@ -23,8 +23,12 @@ public class OptionStockRefreshTask extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
         String resultString = null;
         String inquireCode = null;
-
         for (String tempString : MyService.optionStockCodeList) {
+            if (tempString.indexOf('6') == 0) {
+                tempString = "s_sh" + tempString;
+            } else {
+                tempString = "s_sz" + tempString;
+            }
             if (inquireCode == null) {
                 inquireCode = tempString;
             } else {
@@ -47,10 +51,9 @@ public class OptionStockRefreshTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        System.out.println(s);
         String[] information = s.split(";");
         for (int i = 0; i < information.length - 1; i++) {
-            MyService.optionStockUnitList.set(i, new StockUnit((information[i].split(",")[0]).split("\"")[1], MyService.optionStockCodeList.get(i).substring(2, 8), Float.valueOf(information[i].split(",")[3]), ((Float.valueOf(information[i].split(",")[3]) - Float.valueOf(information[i].split(",")[2])) / Float.valueOf(information[i].split(",")[2])) * 100));
+            MyService.optionStockUnitList.set(i, new StockUnit((information[i].split(",")[0]).split("\"")[1], MyService.optionStockCodeList.get(i), Float.valueOf(information[i].split(",")[1]), Float.valueOf(information[i].split(",")[3]), Float.valueOf(information[i].split(",")[2])));
         }
         OptionFragment.optionStockAdapter.notifyDataSetChanged();
         OptionFragment.swipeRefreshLayout.setRefreshing(false);

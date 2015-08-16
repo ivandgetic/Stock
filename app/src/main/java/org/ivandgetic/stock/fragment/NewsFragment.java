@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import org.ivandgetic.stock.R;
 
-public class AboutFragment extends Fragment {
+public class NewsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_section_about, container, false);
-        ((TextView) rootView.findViewById(R.id.textView)).setText("关于");
+        View rootView = inflater.inflate(R.layout.fragment_section_news, container, false);
+        ((TextView) rootView.findViewById(R.id.textView)).setText("News");
         return rootView;
     }
 

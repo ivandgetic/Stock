@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">股票</string>
     <string name="action_settings">设置</string>
+    <string name="action_about">关于</string>
     <string name="action_exit">退出</string>
+    <string name="title_activity_stock_detail">股票详情</string>
+    <string name="hello_world">Hello world!</string>
 </resources>

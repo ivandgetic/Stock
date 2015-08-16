@@ -21,12 +21,12 @@ public class OptionStockAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return  MyService.optionStockUnitList.size();
+        return MyService.optionStockUnitList.size();
     }
 
     @Override
     public StockUnit getItem(int position) {
-        return  MyService.optionStockUnitList.get(position);
+        return MyService.optionStockUnitList.get(position);
     }
 
     @Override
@@ -44,19 +44,33 @@ public class OptionStockAdapter extends BaseAdapter {
         TextView textViewCode = ((TextView) convertView.findViewById(R.id.code));
         textViewCode.setText(stock.getCode() + "");
         TextView textViewPrice = ((TextView) convertView.findViewById(R.id.price));
-        textViewPrice.setText(decimalFormat.format(stock.getPrice()));
         TextView textViewQuoteChange = ((TextView) convertView.findViewById(R.id.quoteChange));
-        textViewQuoteChange.setText(decimalFormat.format(stock.getQuoteChange()) + "%");
+        TextView textViewChange = (TextView) convertView.findViewById(R.id.change);
+        if (stock.getPrice() > 0) {
+            textViewPrice.setText(decimalFormat.format(stock.getPrice()));
+            textViewQuoteChange.setText(decimalFormat.format(stock.getQuoteChange()) + "%");
+            textViewChange.setText(decimalFormat.format(stock.getChange()));
+        } else {
+            textViewPrice.setText("--");
+            textViewQuoteChange.setText("--");
+            textViewChange.setText("--");
+        }
+
+
         if (stock.getQuoteChange() > 0) {
             textViewPrice.setTextColor(Color.RED);
             textViewQuoteChange.setTextColor(Color.RED);
+            textViewChange.setTextColor(Color.RED);
         } else if (stock.getQuoteChange() == 0) {
-            textViewPrice.setTextColor(Color.WHITE);
-            textViewQuoteChange.setTextColor(Color.WHITE);
+            textViewPrice.setTextColor(Color.BLACK);
+            textViewQuoteChange.setTextColor(Color.BLACK);
+            textViewChange.setTextColor(Color.BLACK);
         } else if (stock.getQuoteChange() < 0) {
-            textViewPrice.setTextColor(Color.GREEN);
-            textViewQuoteChange.setTextColor(Color.GREEN);
+            textViewPrice.setTextColor(0xFF009900);
+            textViewQuoteChange.setTextColor(0xFF009900);
+            textViewChange.setTextColor(0xFF009900);
         }
+
         return convertView;
     }
 }

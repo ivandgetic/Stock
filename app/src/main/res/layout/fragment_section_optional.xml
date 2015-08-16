@@ -11,7 +11,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:paddingLeft="30dp"
             android:text="名称" />
 
@@ -28,7 +28,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="涨跌幅" />
-
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="涨跌" />
     </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -44,10 +49,4 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=" + 添加"
-        android:textSize="22dp" />
 </LinearLayout>
